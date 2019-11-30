@@ -6,6 +6,14 @@ pr:
 - master
 - releases/*
 
+schedules:
+- cron: "0 0 * * *"
+  displayName: Daily upstream bochs HEAD build
+  branches:
+    include:
+    - bochshead
+  always: true
+
 variables:
   BOCHS_REV: HEAD
 

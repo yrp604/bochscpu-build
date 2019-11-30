@@ -1,13 +1,19 @@
 #!/bin/sh
 #
-# .conf.cpu-msvc
+# .conf.cpu
 #
 
-set echo
+CFLAGS="-Wall -g -O3 -fomit-frame-pointer -pipe -fPIC"    # for speed
+#CFLAGS="-Wall -g -pipe -fPIC"        # for development
+CXXFLAGS="$CFLAGS"
+
+export CC
+export CXX
+export CFLAGS
+export CXXFLAGS
 
 # NOTE: repeat-speedups breaks linear access hooks
 ./configure \
-  --target=x86_64-pc-windows \
   --disable-repeat-speedups \
   --enable-fast-function-calls \
   --enable-handlers-chaining \
@@ -17,20 +23,10 @@ set echo
   --enable-evex \
   --enable-vmx=2 \
   --enable-pci \
-  --enable-instrumentation=../cabi \
+  --enable-instrumentation=instrument/bochscpu \
   --enable-show-ips \
   --disable-smp \
   --enable-configurable-msrs \
   --disable-disasm \
-  --with-win32 --with-nogui \
+  --with-nogui \
   ${CONFIGURE_ARGS}
-
-unset echo
-
-# Fix up all makefiles so that nmake can handle them.
-for i in `find . -name Makefile`; do
-  echo Removing curly brackets in $i for NMAKE.
-  mv $i $i.tmp
-  sed -e 's/{/(/g' -e 's/}/)/g' < $i.tmp > $i
-  rm -f $i.tmp
-done

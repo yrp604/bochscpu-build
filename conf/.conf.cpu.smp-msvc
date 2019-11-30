@@ -17,7 +17,7 @@ set echo
   --enable-evex \
   --enable-vmx=2 \
   --enable-pci \
-  --enable-instrumentation=../cabi \
+  --enable-instrumentation=instrument/bochscpu \
   --enable-show-ips \
   --enable-smp \
   --enable-configurable-msrs \

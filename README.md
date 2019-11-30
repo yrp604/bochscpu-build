@@ -31,11 +31,9 @@ $ cd bochs
 $ sh .conf.cpu-msvc
 ```
 
-From VS x64 command prompt
+From a Visual Studio x64 command prompt
 ```
 > cd bochs
-> nmake
-> cd fpu
 > nmake
 ```
 
@@ -46,3 +44,4 @@ This will build the following files:
 - `bochs/cpu/fpu/libfpu.a`
 - `bochs/cpu/avx/libavx.a`
 - `bochs/cpu/cpudb/libcpudb.a`
+- `bochs` source tree

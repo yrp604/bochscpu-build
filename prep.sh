@@ -13,4 +13,9 @@ svn checkout \
     http://svn.code.sf.net/p/bochs/code/trunk/bochs \
     bochs
 
+cp conf/.conf* bochs/
+cp -r bochscpu bochs/instrument
+
 git apply --ignore-whitespace patches/*.patch
+
+rm -rf bochs/.svn

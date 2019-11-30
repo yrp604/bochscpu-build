@@ -1,3 +1,11 @@
+trigger:
+- master
+- releases/*
+
+pr:
+- master
+- releases/*
+
 variables:
   BOCHS_REV: HEAD
 
@@ -7,6 +15,8 @@ jobs:
     vmImage: 'windows-latest'
   steps:
   - script: |
+      set /P BOCHS_REV=< BOCHS_REV
+      echo "##vso[task.setvariable variable=BOCHS_REV]%BOCHS_REV%"
       mkdir "$(Build.ArtifactStagingDirectory)/msvc"
       mkdir "$(Build.ArtifactStagingDirectory)/msvc-smp"
       bash prep.sh
@@ -46,6 +56,8 @@ jobs:
     vmImage: 'ubuntu-latest'
   steps:
   - script: |
+      export BOCHS_REV=$(cat BOCHS_REV)
+      echo "##vso[task.setvariable variable=BOCHS_REV]$BOCHS_REV"
       mkdir -p $(Build.ArtifactStagingDirectory)/gcc
       mkdir -p $(Build.ArtifactStagingDirectory)/gcc-smp
       mkdir -p $(Build.ArtifactStagingDirectory)/clang
@@ -99,6 +111,8 @@ jobs:
     vmImage: 'macOS-latest'
   steps:
   - script: |
+      export BOCHS_REV=$(cat BOCHS_REV)
+      echo "##vso[task.setvariable variable=BOCHS_REV]$BOCHS_REV"
       mkdir -p $(Build.ArtifactStagingDirectory)/clang
       mkdir -p $(Build.ArtifactStagingDirectory)/clang-smp
       sh prep.sh

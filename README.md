@@ -1,7 +1,9 @@
 # bochsbuild
 
-[![Build Status](https://dev.azure.com/yrp604/bochsbuild/_apis/build/status/yrp604.bochsbuild?branchName=master)](https://dev.azure.com/yrp604/bochsbuild/_build/latest?definitionId=2&branchName=master)
-[![Build Status](https://dev.azure.com/yrp604/bochsbuild/_apis/build/status/yrp604.bochsbuild?branchName=bochshead)](https://dev.azure.com/yrp604/bochsbuild/_build/latest?definitionId=2&branchName=bochshead)
+|Branch|Status|
+|------|------|
+|master|[![Build Status](https://dev.azure.com/yrp604/bochsbuild/_apis/build/status/yrp604.bochsbuild?branchName=master)](https://dev.azure.com/yrp604/bochsbuild/_build/latest?definitionId=2&branchName=master)|
+|bochshead|[![Build Status](https://dev.azure.com/yrp604/bochsbuild/_apis/build/status/yrp604.bochsbuild?branchName=bochshead)](https://dev.azure.com/yrp604/bochsbuild/_build/latest?definitionId=2&branchName=bochshead)|
 
 
 This is a build job for the bochs artifacts for bochscpu.

@@ -3,8 +3,6 @@
 # .conf.cpu
 #
 
-CC="gcc"
-CXX="gcc"
 CFLAGS="-Wall -g -O3 -fomit-frame-pointer -pipe -fPIC"    # for speed
 #CFLAGS="-Wall -g -pipe -fPIC"        # for development
 CXXFLAGS="$CFLAGS"

@@ -1,0 +1,125 @@
+variables:
+  BOCHS_REV: HEAD
+
+jobs:
+- job: Windows
+  pool:
+    vmImage: 'windows-latest'
+  steps:
+  - script: |
+      mkdir "$(Build.ArtifactStagingDirectory)/msvc"
+      mkdir "$(Build.ArtifactStagingDirectory)/msvc-smp"
+      bash prep.sh
+    displayName: Prep Build
+  - script: |
+      call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+      cd bochs
+      bash .conf.cpu-msvc
+      nmake
+      cd cpu/fpu
+      nmake
+      cd ../..
+      cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/msvc/cpu.lib
+      cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/msvc/fpu.lib
+      cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/msvc/avx.lib
+      cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/msvc/cpudb.lib
+      nmake clean
+    displayName: Build MSVC
+  - script: |
+      call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+      cd bochs
+      bash .conf.cpu.smp-msvc
+      nmake
+      cd cpu/fpu
+      nmake
+      cd ../..
+      cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/msvc-smp/cpu.lib
+      cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/msvc-smp/fpu.lib
+      cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/msvc-smp/avx.lib
+      cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/msvc-smp/cpudb.lib
+      nmake clean
+    displayName: Build MSVC SMP
+  - publish: $(Build.ArtifactStagingDirectory)
+    artifact: Windows
+- job: Linux
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - script: |
+      mkdir -p $(Build.ArtifactStagingDirectory)/gcc
+      mkdir -p $(Build.ArtifactStagingDirectory)/gcc-smp
+      mkdir -p $(Build.ArtifactStagingDirectory)/clang
+      mkdir -p $(Build.ArtifactStagingDirectory)/clang-smp
+      sh prep.sh
+    displayName: Prep Build
+  - script: |
+      cd bochs
+      CC=gcc CXX=g++ sh .conf.cpu
+      make || true
+      cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/gcc/libcpu.a
+      cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/gcc/libfpu.a
+      cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/gcc/libavx.a
+      cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/gcc/libcpudb.a
+      make clean
+    displayName: Build GCC
+  - script: |
+      cd bochs
+      CC=gcc CXX=g++ sh .conf.cpu
+      make || true
+      cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/gcc-smp/libcpu.a
+      cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/gcc-smp/libfpu.a
+      cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/gcc-smp/libavx.a
+      cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/gcc-smp/libcpudb.a
+      make clean
+    displayName: Build GCC SMP
+  - script: |
+      cd bochs
+      CC=clang CXX=clang++ sh .conf.cpu
+      make || true
+      cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/clang/libcpu.a
+      cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/clang/libfpu.a
+      cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/clang/libavx.a
+      cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/clang/libcpudb.a
+      make clean
+    displayName: Build Clang
+  - script: |
+      cd bochs
+      CC=clang CXX=clang++ sh .conf.cpu
+      make || true
+      cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/clang-smp/libcpu.a
+      cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/clang-smp/libfpu.a
+      cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/clang-smp/libavx.a
+      cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/clang-smp/libcpudb.a
+      make clean
+    displayName: Build Clang SMP
+  - publish: $(Build.ArtifactStagingDirectory)
+    artifact: Linux
+- job: macOS
+  pool:
+    vmImage: 'macOS-latest'
+  steps:
+  - script: |
+      mkdir -p $(Build.ArtifactStagingDirectory)/clang
+      mkdir -p $(Build.ArtifactStagingDirectory)/clang-smp
+      sh prep.sh
+  - script: |
+      cd bochs
+      CC=clang CXX=clang++ sh .conf.cpu
+      make || true
+      cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/clang/libcpu.a
+      cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/clang/libfpu.a
+      cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/clang/libavx.a
+      cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/clang/libcpudb.a
+      make clean
+    displayName: Build Clang
+  - script: |
+      cd bochs
+      CC=clang CXX=clang++ sh .conf.cpu
+      make || true
+      cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/clang-smp/libcpu.a
+      cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/clang-smp/libfpu.a
+      cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/clang-smp/libavx.a
+      cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/clang-smp/libcpudb.a
+    displayName: Build Clang SMP
+  - publish: $(Build.ArtifactStagingDirectory)
+    artifact: macOs

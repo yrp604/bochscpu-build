@@ -1,0 +1,3 @@
+libinstrument.a:
+
+clean:

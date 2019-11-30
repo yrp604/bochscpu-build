@@ -1,133 +1,111 @@
 diff --git a/bochs/cpu/rdrand.cc b/bochs/cpu/rdrand.cc
-index 1b787d4..2fa3421 100644
+index 1b787d4..e9171da 100644
 --- a/bochs/cpu/rdrand.cc
 +++ b/bochs/cpu/rdrand.cc
 @@ -29,6 +29,8 @@
  
  #define HW_RANDOM_GENERATOR_READY (1)
  
-+extern "C" int bochscpu_rand(unsigned);
++extern "C" Bit64u bochscpu_rand(unsigned);
 +
  void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDRAND_Ew(bxInstruction_c *i)
  {
  #if BX_SUPPORT_VMX
-@@ -44,9 +46,9 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDRAND_Ew(bxInstruction_c *i)
+@@ -44,9 +46,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDRAND_Ew(bxInstruction_c *i)
    clearEFlagsOSZAPC();
  
    if (HW_RANDOM_GENERATOR_READY) {
 -    val_16 |= rand() & 0xff;  // hack using std C rand() function
-+    val_16 |= bochscpu_rand(BX_CPU_ID) & 0xff;  // hack using std C bochscpu_rand(BX_CPU_ID) function
-     val_16 <<= 8;
+-    val_16 <<= 8;
 -    val_16 |= rand() & 0xff;
-+    val_16 |= bochscpu_rand(BX_CPU_ID) & 0xff;
++    val_16 |= (Bit16u)bochscpu_rand(BX_CPU_ID);
  
      assert_CF();
    }
-@@ -71,13 +73,13 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDRAND_Ed(bxInstruction_c *i)
+@@ -71,13 +71,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDRAND_Ed(bxInstruction_c *i)
    clearEFlagsOSZAPC();
  
    if (HW_RANDOM_GENERATOR_READY) {
 -    val_32 |= rand() & 0xff;  // hack using std C rand() function
-+    val_32 |= bochscpu_rand(BX_CPU_ID) & 0xff;  // hack using std C bochscpu_rand(BX_CPU_ID) function
-     val_32 <<= 8;
+-    val_32 <<= 8;
 -    val_32 |= rand() & 0xff;
-+    val_32 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_32 <<= 8;
+-    val_32 <<= 8;
 -    val_32 |= rand() & 0xff;
-+    val_32 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_32 <<= 8;
+-    val_32 <<= 8;
 -    val_32 |= rand() & 0xff;
-+    val_32 |= bochscpu_rand(BX_CPU_ID) & 0xff;
++    val_32 |= (Bit32u)bochscpu_rand(BX_CPU_ID);
  
      assert_CF();
    }
-@@ -103,21 +105,21 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDRAND_Eq(bxInstruction_c *i)
+@@ -103,21 +97,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDRAND_Eq(bxInstruction_c *i)
    clearEFlagsOSZAPC();
  
    if (HW_RANDOM_GENERATOR_READY) {
 -    val_64 |= rand() & 0xff;  // hack using std C rand() function
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;  // hack using std C bochscpu_rand(BX_CPU_ID) function
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
++    val_64 |= bochscpu_rand(BX_CPU_ID);
  
      assert_CF();
    }
-@@ -143,9 +145,9 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDSEED_Ew(bxInstruction_c *i)
+@@ -143,9 +123,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDSEED_Ew(bxInstruction_c *i)
    clearEFlagsOSZAPC();
  
    if (HW_RANDOM_GENERATOR_READY) {
 -    val_16 |= rand() & 0xff;  // hack using std C rand() function
-+    val_16 |= bochscpu_rand(BX_CPU_ID) & 0xff;  // hack using std C bochscpu_rand(BX_CPU_ID) function
-     val_16 <<= 8;
+-    val_16 <<= 8;
 -    val_16 |= rand() & 0xff;
-+    val_16 |= bochscpu_rand(BX_CPU_ID) & 0xff;
++    val_16 |= (Bit16u)bochscpu_rand(BX_CPU_ID);
  
      assert_CF();
    }
-@@ -170,13 +172,13 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDSEED_Ed(bxInstruction_c *i)
+@@ -170,13 +148,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDSEED_Ed(bxInstruction_c *i)
    clearEFlagsOSZAPC();
  
    if (HW_RANDOM_GENERATOR_READY) {
 -    val_32 |= rand() & 0xff;  // hack using std C rand() function
-+    val_32 |= bochscpu_rand(BX_CPU_ID) & 0xff;  // hack using std C bochscpu_rand(BX_CPU_ID) function
-     val_32 <<= 8;
+-    val_32 <<= 8;
 -    val_32 |= rand() & 0xff;
-+    val_32 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_32 <<= 8;
+-    val_32 <<= 8;
 -    val_32 |= rand() & 0xff;
-+    val_32 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_32 <<= 8;
+-    val_32 <<= 8;
 -    val_32 |= rand() & 0xff;
-+    val_32 |= bochscpu_rand(BX_CPU_ID) & 0xff;
++    val_32 |= (Bit32u)bochscpu_rand(BX_CPU_ID);
  
      assert_CF();
    }
-@@ -202,21 +204,21 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDSEED_Eq(bxInstruction_c *i)
+@@ -202,21 +174,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDSEED_Eq(bxInstruction_c *i)
    clearEFlagsOSZAPC();
  
    if (HW_RANDOM_GENERATOR_READY) {
 -    val_64 |= rand() & 0xff;  // hack using std C rand() function
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;  // hack using std C bochscpu_rand(BX_CPU_ID) function
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
-     val_64 <<= 8;
+-    val_64 <<= 8;
 -    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID) & 0xff;
++    val_64 |= bochscpu_rand(BX_CPU_ID);
  
      assert_CF();
    }

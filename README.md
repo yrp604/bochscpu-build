@@ -18,7 +18,7 @@ Requires subversion, git, and a C compiler
 $ sh prep.sh
 $ cd bochs
 $ sh .conf.cpu
-$ nmake
+$ make
 ```
 
 ### Windows

@@ -172,6 +172,7 @@ jobs:
       cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libfpu.a
       cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libavx.a
       cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libcpudb.a
+      make clean
     displayName: Build Clang SMP
   - task: CopyFiles@2
     inputs:

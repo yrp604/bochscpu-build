@@ -96,7 +96,7 @@ jobs:
       targetFolder: $(Build.ArtifactStagingDirectory)/gcc/bochs
   - script: |
       cd bochs
-      CC=gcc CXX=g++ sh .conf.cpu
+      CC=gcc CXX=g++ sh .conf.cpu.smp
       make || true
       cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/gcc-smp/lib/libcpu.a
       cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/gcc-smp/lib/libfpu.a
@@ -166,7 +166,7 @@ jobs:
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
   - script: |
       cd bochs
-      CC=clang CXX=clang++ sh .conf.cpu
+      CC=clang CXX=clang++ sh .conf.cpu.smp
       make || true
       cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libcpu.a
       cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libfpu.a

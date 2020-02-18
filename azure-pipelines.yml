@@ -40,7 +40,7 @@ jobs:
       cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/msvc/lib/fpu.lib
       cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/msvc/lib/avx.lib
       cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/msvc/lib/cpudb.lib
-      nmake clean
+      nmake all-clean
     displayName: Build MSVC
   - task: CopyFiles@2
     inputs:
@@ -55,7 +55,7 @@ jobs:
       cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/msvc-smp/lib/fpu.lib
       cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/msvc-smp/lib/avx.lib
       cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/msvc-smp/lib/cpudb.lib
-      nmake clean
+      nmake all-clean
     displayName: Build MSVC SMP
   - task: CopyFiles@2
     inputs:
@@ -88,7 +88,7 @@ jobs:
       cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/gcc/lib/libfpu.a
       cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/gcc/lib/libavx.a
       cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/gcc/lib/libcpudb.a
-      make clean
+      make all-clean
     displayName: Build GCC
   - task: CopyFiles@2
     inputs:
@@ -102,7 +102,7 @@ jobs:
       cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/gcc-smp/lib/libfpu.a
       cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/gcc-smp/lib/libavx.a
       cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/gcc-smp/lib/libcpudb.a
-      make clean
+      make all-clean
     displayName: Build GCC SMP
   - task: CopyFiles@2
     inputs:
@@ -116,7 +116,7 @@ jobs:
       cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/clang/lib/libfpu.a
       cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/clang/lib/libavx.a
       cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/clang/lib/libcpudb.a
-      make clean
+      make all-clean
     displayName: Build Clang
   - task: CopyFiles@2
     inputs:
@@ -130,7 +130,7 @@ jobs:
       cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libfpu.a
       cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libavx.a
       cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libcpudb.a
-      make clean
+      make all-clean
     displayName: Build Clang SMP
   - task: CopyFiles@2
     inputs:
@@ -158,7 +158,7 @@ jobs:
       cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/clang/lib/libfpu.a
       cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/clang/lib/libavx.a
       cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/clang/lib/libcpudb.a
-      make clean
+      make all-clean
     displayName: Build Clang
   - task: CopyFiles@2
     inputs:
@@ -172,7 +172,7 @@ jobs:
       cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libfpu.a
       cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libavx.a
       cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libcpudb.a
-      make clean
+      make all-clean
     displayName: Build Clang SMP
   - task: CopyFiles@2
     inputs:

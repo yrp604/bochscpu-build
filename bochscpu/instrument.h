@@ -41,7 +41,7 @@ void bx_instr_debug_promt();
 void bx_instr_debug_cmd(const char *cmd);
 
 void bx_instr_cnear_branch_taken(unsigned cpu, bx_address branch_eip, bx_address new_eip);
-void bx_instr_cnear_branch_not_taken(unsigned cpu, bx_address branch_eip);
+void bx_instr_cnear_branch_not_taken(unsigned cpu, bx_address branch_eip, bx_address new_eip);
 void bx_instr_ucnear_branch(unsigned cpu, unsigned what, bx_address branch_eip, bx_address new_eip);
 void bx_instr_far_branch(unsigned cpu, unsigned what, Bit16u prev_cs, bx_address prev_eip, Bit16u new_cs, bx_address new_eip);
 
@@ -92,7 +92,7 @@ void bx_instr_vmexit(unsigned cpu, Bit32u reason, Bit64u qualification);
 
 /* branch resolution */
 #define BX_INSTR_CNEAR_BRANCH_TAKEN(cpu_id, branch_eip, new_eip) bx_instr_cnear_branch_taken(cpu_id, branch_eip, new_eip)
-#define BX_INSTR_CNEAR_BRANCH_NOT_TAKEN(cpu_id, branch_eip) bx_instr_cnear_branch_not_taken(cpu_id, branch_eip)
+#define BX_INSTR_CNEAR_BRANCH_NOT_TAKEN(cpu_id, branch_eip, new_eip) bx_instr_cnear_branch_not_taken(cpu_id, branch_eip, new_eip)
 #define BX_INSTR_UCNEAR_BRANCH(cpu_id, what, branch_eip, new_eip) bx_instr_ucnear_branch(cpu_id, what, branch_eip, new_eip)
 #define BX_INSTR_FAR_BRANCH(cpu_id, what, prev_cs, prev_eip, new_cs, new_eip) \
                        bx_instr_far_branch(cpu_id, what, prev_cs, prev_eip, new_cs, new_eip)

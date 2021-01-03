@@ -27,8 +27,6 @@ jobs:
       echo "##vso[task.setvariable variable=BOCHS_REV]%BOCHS_REV%"
       mkdir "$(Build.ArtifactStagingDirectory)/msvc/lib"
       mkdir "$(Build.ArtifactStagingDirectory)/msvc/bochs"
-      mkdir "$(Build.ArtifactStagingDirectory)/msvc-smp/lib"
-      mkdir "$(Build.ArtifactStagingDirectory)/msvc-smp/bochs"
       bash prep.sh
     displayName: Prep Build
   - script: |
@@ -46,23 +44,12 @@ jobs:
     inputs:
       sourceFolder: bochs
       targetFolder: $(Build.ArtifactStagingDirectory)\msvc\bochs
-  - script: |
-      call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-      cd bochs
-      bash .conf.cpu.smp-msvc
-      nmake
-      cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/msvc-smp/lib/cpu.lib
-      cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/msvc-smp/lib/fpu.lib
-      cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/msvc-smp/lib/avx.lib
-      cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/msvc-smp/lib/cpudb.lib
-      nmake all-clean
-    displayName: Build MSVC SMP
-  - task: CopyFiles@2
-    inputs:
-      sourceFolder: bochs
-      targetFolder: $(Build.ArtifactStagingDirectory)\msvc-smp\bochs
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: bochs-x64-win
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: bochs-x64-win
 - job: Linux
   pool:
     vmImage: 'ubuntu-latest'
@@ -72,12 +59,8 @@ jobs:
       echo "##vso[task.setvariable variable=BOCHS_REV]$BOCHS_REV"
       mkdir -p $(Build.ArtifactStagingDirectory)/gcc/lib
       mkdir -p $(Build.ArtifactStagingDirectory)/gcc/bochs
-      mkdir -p $(Build.ArtifactStagingDirectory)/gcc-smp/lib
-      mkdir -p $(Build.ArtifactStagingDirectory)/gcc-smp/bochs
       mkdir -p $(Build.ArtifactStagingDirectory)/clang/lib
       mkdir -p $(Build.ArtifactStagingDirectory)/clang/bochs
-      mkdir -p $(Build.ArtifactStagingDirectory)/clang-smp/lib
-      mkdir -p $(Build.ArtifactStagingDirectory)/clang-smp/lib/bochs
       sh prep.sh
     displayName: Prep Build
   - script: |
@@ -96,20 +79,6 @@ jobs:
       targetFolder: $(Build.ArtifactStagingDirectory)/gcc/bochs
   - script: |
       cd bochs
-      CC=gcc CXX=g++ sh .conf.cpu.smp
-      make || true
-      cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/gcc-smp/lib/libcpu.a
-      cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/gcc-smp/lib/libfpu.a
-      cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/gcc-smp/lib/libavx.a
-      cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/gcc-smp/lib/libcpudb.a
-      make all-clean
-    displayName: Build GCC SMP
-  - task: CopyFiles@2
-    inputs:
-      sourceFolder: bochs
-      targetFolder: $(Build.ArtifactStagingDirectory)/gcc-smp/bochs
-  - script: |
-      cd bochs
       CC=clang CXX=clang++ sh .conf.cpu
       make || true
       cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/clang/lib/libcpu.a
@@ -122,22 +91,12 @@ jobs:
     inputs:
       sourceFolder: bochs
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
-  - script: |
-      cd bochs
-      CC=clang CXX=clang++ sh .conf.cpu
-      make || true
-      cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libcpu.a
-      cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libfpu.a
-      cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libavx.a
-      cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libcpudb.a
-      make all-clean
-    displayName: Build Clang SMP
-  - task: CopyFiles@2
-    inputs:
-      sourceFolder: bochs
-      targetFolder: $(Build.ArtifactStagingDirectory)/clang-smp/bochs
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: bochs-x64-linux
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: bochs-x64-linux
 - job: macOS
   pool:
     vmImage: 'macOS-latest'
@@ -147,8 +106,6 @@ jobs:
       echo "##vso[task.setvariable variable=BOCHS_REV]$BOCHS_REV"
       mkdir -p $(Build.ArtifactStagingDirectory)/clang/lib
       mkdir -p $(Build.ArtifactStagingDirectory)/clang/bochs
-      mkdir -p $(Build.ArtifactStagingDirectory)/clang-smp/lib
-      mkdir -p $(Build.ArtifactStagingDirectory)/clang-smp/bochs
       sh prep.sh
   - script: |
       cd bochs
@@ -164,19 +121,9 @@ jobs:
     inputs:
       sourceFolder: bochs
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
-  - script: |
-      cd bochs
-      CC=clang CXX=clang++ sh .conf.cpu.smp
-      make || true
-      cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libcpu.a
-      cp cpu/fpu/libfpu.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libfpu.a
-      cp cpu/avx/libavx.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libavx.a
-      cp cpu/cpudb/libcpudb.a $(Build.ArtifactStagingDirectory)/clang-smp/lib/libcpudb.a
-      make all-clean
-    displayName: Build Clang SMP
-  - task: CopyFiles@2
-    inputs:
-      sourceFolder: bochs
-      targetFolder: $(Build.ArtifactStagingDirectory)/clang-smp/bochs
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: bochs-x64-macos
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: bochs-x64-macos

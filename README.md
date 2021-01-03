@@ -12,6 +12,10 @@ This is a build job for the bochs artifacts for bochscpu.
 
 Requires subversion, git, and a C compiler
 
+NOTES:
+- by design the build will fail with an error about libinstrument. This is
+expected and fine.
+
 ### Linux/macOS
 
 ```
@@ -45,3 +49,21 @@ This will build the following files:
 - `bochs/cpu/avx/libavx.a`
 - `bochs/cpu/cpudb/libcpudb.a`
 - `bochs` source tree
+
+These needs to wind up in a directory tree like this:
+```
+x@y:~/bochscpu$ tree bochs
+bochs/
+└── [... snip many c files here ...]
+x@y:~/bochscpu$ tree lib
+lib
+├── avx.lib
+├── cpudb.lib
+├── cpu.lib
+└── fpu.lib
+```
+
+On Windows these files will be named `object.lib`, on linux/macos they will
+`libobject.a`. This is done by default by the pipeline script, and you should
+be able to simply copy the precompiled artifacts into your `bochscpu` source
+tree.

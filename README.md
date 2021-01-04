@@ -6,7 +6,8 @@
 |bochshead|[![Build Status](https://dev.azure.com/yrp604/bochscpu-build/_apis/build/status/yrp604.bochscpu-build?branchName=bochshead)](https://dev.azure.com/yrp604/bochscpu-build/_build/latest?definitionId=2&branchName=bochshead)|
 
 
-This is a build job for the bochs artifacts for bochscpu.
+This is a build job for the bochs artifacts for bochscpu. For normal usage you
+should only need to download a recent release, not build from source yourself.
 
 ## Build
 

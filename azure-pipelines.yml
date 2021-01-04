@@ -46,16 +46,14 @@ jobs:
       targetFolder: $(Build.ArtifactStagingDirectory)\msvc\bochs
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: bochs-x64-win
-  - task: GitHubRelease@1
+  - task: UniversalPackages@0
+    displayName: Universal Publish
     inputs:
-      gitHubConnection: 'bochscpu-build'
-      repositoryName: 'yrp604/bochscpu-build'
-      action: 'edit'
-      target: '$(Build.SourceVersion)'
-      tagSource: 'gitTag'
-      changeLogCompareToRelease: 'lastFullRelease'
-      changeLogType: 'commitBased'
-      assets: '$(Build.ArtifactStagingDirectory)/*'
+      command: publish
+      publishDirectory: '$(Build.ArtifactStagingDirectory)'
+      vstsFeedPublish: 'bochscpu-build'
+      vstsFeedPackagePublish: 'bochscpu-win'
+      packagePublishDescription: 'Windows Bochs Artifacts'
 - job: Linux
   pool:
     vmImage: 'ubuntu-latest'
@@ -99,16 +97,14 @@ jobs:
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: bochs-x64-linux
-  - task: GitHubRelease@1
+  - task: UniversalPackages@0
+    displayName: Universal Publish
     inputs:
-      gitHubConnection: 'bochscpu-build'
-      repositoryName: 'yrp604/bochscpu-build'
-      action: 'edit'
-      target: '$(Build.SourceVersion)'
-      tagSource: 'gitTag'
-      changeLogCompareToRelease: 'lastFullRelease'
-      changeLogType: 'commitBased'
-      assets: '$(Build.ArtifactStagingDirectory)/*'
+      command: publish
+      publishDirectory: '$(Build.ArtifactStagingDirectory)'
+      vstsFeedPublish: 'bochscpu-build'
+      vstsFeedPackagePublish: 'bochscpu-linux'
+      packagePublishDescription: 'Linux Bochs Artifacts'
 - job: macOS
   pool:
     vmImage: 'macOS-latest'
@@ -135,13 +131,11 @@ jobs:
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: bochs-x64-macos
-  - task: GitHubRelease@1
+  - task: UniversalPackages@0
+    displayName: Universal Publish
     inputs:
-      gitHubConnection: 'bochscpu-build'
-      repositoryName: 'yrp604/bochscpu-build'
-      action: 'edit'
-      target: '$(Build.SourceVersion)'
-      tagSource: 'gitTag'
-      changeLogCompareToRelease: 'lastFullRelease'
-      changeLogType: 'commitBased'
-      assets: '$(Build.ArtifactStagingDirectory)/*'
+      command: publish
+      publishDirectory: '$(Build.ArtifactStagingDirectory)'
+      vstsFeedPublish: 'bochscpu-build'
+      vstsFeedPackagePublish: 'bochscpu-mac'
+      packagePublishDescription: 'macOS Bochs Artifacts'

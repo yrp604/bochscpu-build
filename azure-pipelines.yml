@@ -55,6 +55,8 @@ jobs:
       tagSource: 'gitTag'
       changeLogCompareToRelease: 'lastFullRelease'
       changeLogType: 'commitBased'
+      assets: '$(Build.ArtifactStagingDirectory)/*'
+      title: 'Windows $(Build.SourceVersion)'
 - job: Linux
   pool:
     vmImage: 'ubuntu-latest'
@@ -107,6 +109,8 @@ jobs:
       tagSource: 'gitTag'
       changeLogCompareToRelease: 'lastFullRelease'
       changeLogType: 'commitBased'
+      assets: '$(Build.ArtifactStagingDirectory)/*'
+      title: 'Linux $(Build.SourceVersion)'
 - job: macOS
   pool:
     vmImage: 'macOS-latest'
@@ -142,3 +146,5 @@ jobs:
       tagSource: 'gitTag'
       changeLogCompareToRelease: 'lastFullRelease'
       changeLogType: 'commitBased'
+      assets: '$(Build.ArtifactStagingDirectory)/*'
+      title: 'macOS $(Build.SourceVersion)'

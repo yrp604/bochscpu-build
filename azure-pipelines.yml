@@ -46,10 +46,6 @@ jobs:
       targetFolder: $(Build.ArtifactStagingDirectory)\msvc\bochs
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: bochs-x64-win
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: '$(Build.ArtifactStagingDirectory)'
-      artifactName: bochs-x64-win
 - job: Linux
   pool:
     vmImage: 'ubuntu-latest'
@@ -93,10 +89,6 @@ jobs:
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: bochs-x64-linux
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: '$(Build.ArtifactStagingDirectory)'
-      artifactName: bochs-x64-linux
 - job: macOS
   pool:
     vmImage: 'macOS-latest'
@@ -123,7 +115,3 @@ jobs:
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: bochs-x64-macos
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: '$(Build.ArtifactStagingDirectory)'
-      artifactName: bochs-x64-macos

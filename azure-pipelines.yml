@@ -50,13 +50,12 @@ jobs:
     inputs:
       gitHubConnection: 'bochscpu-build'
       repositoryName: 'yrp604/bochscpu-build'
-      action: 'create'
+      action: 'edit'
       target: '$(Build.SourceVersion)'
       tagSource: 'gitTag'
       changeLogCompareToRelease: 'lastFullRelease'
       changeLogType: 'commitBased'
       assets: '$(Build.ArtifactStagingDirectory)/*'
-      title: 'Windows $(Build.SourceVersion)'
 - job: Linux
   pool:
     vmImage: 'ubuntu-latest'
@@ -104,13 +103,12 @@ jobs:
     inputs:
       gitHubConnection: 'bochscpu-build'
       repositoryName: 'yrp604/bochscpu-build'
-      action: 'create'
+      action: 'edit'
       target: '$(Build.SourceVersion)'
       tagSource: 'gitTag'
       changeLogCompareToRelease: 'lastFullRelease'
       changeLogType: 'commitBased'
       assets: '$(Build.ArtifactStagingDirectory)/*'
-      title: 'Linux $(Build.SourceVersion)'
 - job: macOS
   pool:
     vmImage: 'macOS-latest'
@@ -141,10 +139,9 @@ jobs:
     inputs:
       gitHubConnection: 'bochscpu-build'
       repositoryName: 'yrp604/bochscpu-build'
-      action: 'create'
+      action: 'edit'
       target: '$(Build.SourceVersion)'
       tagSource: 'gitTag'
       changeLogCompareToRelease: 'lastFullRelease'
       changeLogType: 'commitBased'
       assets: '$(Build.ArtifactStagingDirectory)/*'
-      title: 'macOS $(Build.SourceVersion)'

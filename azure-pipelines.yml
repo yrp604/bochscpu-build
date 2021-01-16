@@ -44,16 +44,6 @@ jobs:
     inputs:
       sourceFolder: bochs
       targetFolder: $(Build.ArtifactStagingDirectory)\msvc\bochs
-  - publish: $(Build.ArtifactStagingDirectory)
-    artifact: bochs-x64-win
-  - task: UniversalPackages@0
-    displayName: Universal Publish
-    inputs:
-      command: publish
-      publishDirectory: '$(Build.ArtifactStagingDirectory)'
-      vstsFeedPublish: 'bochscpu-build'
-      vstsFeedPackagePublish: 'bochscpu-win'
-      packagePublishDescription: 'Windows Bochs Artifacts'
 - job: Linux
   pool:
     vmImage: 'ubuntu-latest'
@@ -95,16 +85,6 @@ jobs:
     inputs:
       sourceFolder: bochs
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
-  - publish: $(Build.ArtifactStagingDirectory)
-    artifact: bochs-x64-linux
-  - task: UniversalPackages@0
-    displayName: Universal Publish
-    inputs:
-      command: publish
-      publishDirectory: '$(Build.ArtifactStagingDirectory)'
-      vstsFeedPublish: 'bochscpu-build'
-      vstsFeedPackagePublish: 'bochscpu-linux'
-      packagePublishDescription: 'Linux Bochs Artifacts'
 - job: macOS
   pool:
     vmImage: 'macOS-latest'
@@ -129,13 +109,3 @@ jobs:
     inputs:
       sourceFolder: bochs
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
-  - publish: $(Build.ArtifactStagingDirectory)
-    artifact: bochs-x64-macos
-  - task: UniversalPackages@0
-    displayName: Universal Publish
-    inputs:
-      command: publish
-      publishDirectory: '$(Build.ArtifactStagingDirectory)'
-      vstsFeedPublish: 'bochscpu-build'
-      vstsFeedPackagePublish: 'bochscpu-mac'
-      packagePublishDescription: 'macOS Bochs Artifacts'

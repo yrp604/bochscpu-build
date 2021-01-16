@@ -44,6 +44,8 @@ jobs:
     inputs:
       sourceFolder: bochs
       targetFolder: $(Build.ArtifactStagingDirectory)\msvc\bochs
+  - publish: $(Build.ArtifactStagingDirectory)
+    artifact: bochs-x64-win
 - job: Linux
   pool:
     vmImage: 'ubuntu-latest'
@@ -85,6 +87,8 @@ jobs:
     inputs:
       sourceFolder: bochs
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
+  - publish: $(Build.ArtifactStagingDirectory)
+    artifact: bochs-x64-linux
 - job: macOS
   pool:
     vmImage: 'macOS-latest'
@@ -109,3 +113,5 @@ jobs:
     inputs:
       sourceFolder: bochs
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
+  - publish: $(Build.ArtifactStagingDirectory)
+    artifact: bochs-x64-macos

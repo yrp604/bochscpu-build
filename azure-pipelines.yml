@@ -31,7 +31,7 @@ jobs:
     displayName: Prep Build
   - script: |
       call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-      cd bochs
+      cd Bochs/bochs
       bash .conf.cpu-msvc
       nmake
       cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/msvc/lib/cpu.lib
@@ -42,7 +42,7 @@ jobs:
     displayName: Build MSVC
   - task: CopyFiles@2
     inputs:
-      sourceFolder: bochs
+      sourceFolder: Bochs/bochs
       targetFolder: $(Build.ArtifactStagingDirectory)\msvc\bochs
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: bochs-x64-win
@@ -60,7 +60,7 @@ jobs:
       sh prep.sh
     displayName: Prep Build
   - script: |
-      cd bochs
+      cd Bochs/bochs
       CC=gcc CXX=g++ sh .conf.cpu
       make || true
       cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/gcc/lib/libcpu.a
@@ -71,10 +71,10 @@ jobs:
     displayName: Build GCC
   - task: CopyFiles@2
     inputs:
-      sourceFolder: bochs
+      sourceFolder: Bochs/bochs
       targetFolder: $(Build.ArtifactStagingDirectory)/gcc/bochs
   - script: |
-      cd bochs
+      cd Bochs/bochs
       CC=clang CXX=clang++ sh .conf.cpu
       make || true
       cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/clang/lib/libcpu.a
@@ -85,7 +85,7 @@ jobs:
     displayName: Build Clang
   - task: CopyFiles@2
     inputs:
-      sourceFolder: bochs
+      sourceFolder: Bochs/bochs
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: bochs-x64-linux
@@ -100,7 +100,7 @@ jobs:
       mkdir -p $(Build.ArtifactStagingDirectory)/clang/bochs
       sh prep.sh
   - script: |
-      cd bochs
+      cd Bochs/bochs
       CC=clang CXX=clang++ sh .conf.cpu
       make || true
       cp cpu/libcpu.a $(Build.ArtifactStagingDirectory)/clang/lib/libcpu.a
@@ -111,7 +111,7 @@ jobs:
     displayName: Build Clang
   - task: CopyFiles@2
     inputs:
-      sourceFolder: bochs
+      sourceFolder: Bochs/bochs
       targetFolder: $(Build.ArtifactStagingDirectory)/clang/bochs
   - publish: $(Build.ArtifactStagingDirectory)
     artifact: bochs-x64-macos

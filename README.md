@@ -21,7 +21,7 @@ expected and fine.
 
 ```
 $ sh prep.sh
-$ cd bochs
+$ cd Bochs\bochs
 $ sh .conf.cpu
 $ make
 ```
@@ -32,24 +32,24 @@ From WSL/Cygwin
 
 ```
 $ sh prep.sh
-$ cd bochs
+$ cd Bochs\bochs
 $ sh .conf.cpu-msvc
 ```
 
 From a Visual Studio x64 command prompt
 ```
-> cd bochs
+> cd Bochs\bochs
 > nmake
 ```
 
 ## Artifacts
 
 This will build the following files:
-- `bochs/cpu/libcpu.a`
-- `bochs/cpu/fpu/libfpu.a`
-- `bochs/cpu/avx/libavx.a`
-- `bochs/cpu/cpudb/libcpudb.a`
-- `bochs` source tree
+- `Bochs/bochs/cpu/libcpu.a`
+- `Bochs/bochs/cpu/fpu/libfpu.a`
+- `Bochs/bochs/cpu/avx/libavx.a`
+- `Bochs/bochs/cpu/cpudb/libcpudb.a`
+- `Bochs/bochs` source tree
 
 These needs to wind up in a directory tree like this:
 ```

@@ -8,14 +8,15 @@ then
     BOCHS_REV="HEAD"
 fi
 
-svn checkout \
-    --revision $BOCHS_REV \
-    http://svn.code.sf.net/p/bochs/code/trunk/bochs \
-    bochs
+git clone https://github.com/stlintel/Bochs.git
 
-cp conf/.conf* bochs/
-cp -r bochscpu bochs/instrument
+cd Bochs
 
-git apply --ignore-whitespace patches/*.patch
+git reset --hard $BOCHS_REV
 
-rm -rf bochs/.svn
+cp ../conf/.conf* bochs/
+cp -r ../bochscpu bochs/instrument
+
+git apply --ignore-whitespace ../patches/*.patch
+
+rm -rf .git

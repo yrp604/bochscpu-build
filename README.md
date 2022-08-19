@@ -21,7 +21,7 @@ expected and fine.
 
 ```
 $ sh prep.sh
-$ cd Bochs\bochs
+$ cd Bochs/bochs
 $ sh .conf.cpu
 $ make
 ```
@@ -32,7 +32,7 @@ From WSL/Cygwin
 
 ```
 $ sh prep.sh
-$ cd Bochs\bochs
+$ cd Bochs/bochs
 $ sh .conf.cpu-msvc
 ```
 

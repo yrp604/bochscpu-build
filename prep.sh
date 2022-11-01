@@ -8,7 +8,7 @@ then
     BOCHS_REV="HEAD"
 fi
 
-git clone https://github.com/stlintel/Bochs.git
+git clone https://github.com/bochs-emu/Bochs.git
 
 cd Bochs
 

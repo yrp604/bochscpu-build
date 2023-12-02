@@ -1,111 +1,18 @@
 diff --git a/bochs/cpu/rdrand.cc b/bochs/cpu/rdrand.cc
-index 1b787d4..e9171da 100644
+index cb26678fd..1438f43db 100644
 --- a/bochs/cpu/rdrand.cc
 +++ b/bochs/cpu/rdrand.cc
-@@ -29,6 +29,8 @@
- 
- #define HW_RANDOM_GENERATOR_READY (1)
- 
+@@ -34,10 +34,12 @@ bool hw_rand_ready()
+   return HW_RANDOM_GENERATOR_READY;
+ }
+
 +extern "C" Bit64u bochscpu_rand(unsigned);
 +
- void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDRAND_Ew(bxInstruction_c *i)
+ // provide a byte of data from Hardware Random Generator (TBD: implement as device)
+ Bit8u hw_rand8()
  {
- #if BX_SUPPORT_VMX
-@@ -44,9 +46,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDRAND_Ew(bxInstruction_c *i)
-   clearEFlagsOSZAPC();
- 
-   if (HW_RANDOM_GENERATOR_READY) {
--    val_16 |= rand() & 0xff;  // hack using std C rand() function
--    val_16 <<= 8;
--    val_16 |= rand() & 0xff;
-+    val_16 |= (Bit16u)bochscpu_rand(BX_CPU_ID);
- 
-     assert_CF();
-   }
-@@ -71,13 +71,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDRAND_Ed(bxInstruction_c *i)
-   clearEFlagsOSZAPC();
- 
-   if (HW_RANDOM_GENERATOR_READY) {
--    val_32 |= rand() & 0xff;  // hack using std C rand() function
--    val_32 <<= 8;
--    val_32 |= rand() & 0xff;
--    val_32 <<= 8;
--    val_32 |= rand() & 0xff;
--    val_32 <<= 8;
--    val_32 |= rand() & 0xff;
-+    val_32 |= (Bit32u)bochscpu_rand(BX_CPU_ID);
- 
-     assert_CF();
-   }
-@@ -103,21 +97,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDRAND_Eq(bxInstruction_c *i)
-   clearEFlagsOSZAPC();
- 
-   if (HW_RANDOM_GENERATOR_READY) {
--    val_64 |= rand() & 0xff;  // hack using std C rand() function
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID);
- 
-     assert_CF();
-   }
-@@ -143,9 +123,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDSEED_Ew(bxInstruction_c *i)
-   clearEFlagsOSZAPC();
- 
-   if (HW_RANDOM_GENERATOR_READY) {
--    val_16 |= rand() & 0xff;  // hack using std C rand() function
--    val_16 <<= 8;
--    val_16 |= rand() & 0xff;
-+    val_16 |= (Bit16u)bochscpu_rand(BX_CPU_ID);
- 
-     assert_CF();
-   }
-@@ -170,13 +148,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDSEED_Ed(bxInstruction_c *i)
-   clearEFlagsOSZAPC();
- 
-   if (HW_RANDOM_GENERATOR_READY) {
--    val_32 |= rand() & 0xff;  // hack using std C rand() function
--    val_32 <<= 8;
--    val_32 |= rand() & 0xff;
--    val_32 <<= 8;
--    val_32 |= rand() & 0xff;
--    val_32 <<= 8;
--    val_32 |= rand() & 0xff;
-+    val_32 |= (Bit32u)bochscpu_rand(BX_CPU_ID);
- 
-     assert_CF();
-   }
-@@ -202,21 +174,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDSEED_Eq(bxInstruction_c *i)
-   clearEFlagsOSZAPC();
- 
-   if (HW_RANDOM_GENERATOR_READY) {
--    val_64 |= rand() & 0xff;  // hack using std C rand() function
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
--    val_64 <<= 8;
--    val_64 |= rand() & 0xff;
-+    val_64 |= bochscpu_rand(BX_CPU_ID);
- 
-     assert_CF();
-   }
+-  return rand() & 0xff;     // hack using std C rand() function
++  return bochscpu_rand(BX_CPU_ID) & 0xff;     // hack using std C rand() function
+ }
+
+ // provide a 16-bit of data from Hardware Random Generator (TBD: implement as device)

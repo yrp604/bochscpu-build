@@ -1,0 +1,83 @@
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches:
+    - main
+  schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  bochscpu:
+    env:
+      NB_CPU: 1
+    strategy:
+      fail-fast: false
+      matrix:
+        variant:
+          - {os: windows-latest, arch: x64}
+          - {os: ubuntu-latest, arch: x64}
+          - {os: macos-latest, arch: x64}
+    runs-on: ${{ matrix.variant.os }}
+    name: ${{ matrix.variant.os }} / ${{ matrix.variant.arch }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Initialization (Windows)
+      if: matrix.variant.os == 'windows-latest'
+      run: echo "NB_CPU=$env:NUMBER_OF_PROCESSORS" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+    - name: Initialization (Linux)
+      if: matrix.variant.os == 'ubuntu-latest'
+      run: echo "NB_CPU=$(grep -c ^processor /proc/cpuinfo)" >> $GITHUB_ENV
+
+    - name: Initialization (MacOS)
+      if: matrix.variant.os == 'macos-latest'
+      run: echo "NB_CPU=$(sysctl -n hw.ncpu)" >> $GITHUB_ENV
+
+    - uses: microsoft/setup-msbuild@v1
+      if: matrix.variant.os == 'windows-latest'
+
+    - uses: ilammy/msvc-dev-cmd@v1
+      if: matrix.variant.os == 'windows-latest'
+
+    - name: Build BochsCPU (Windows)
+      if: matrix.variant.os == 'windows-latest'
+      shell: powershell
+      run: |
+        mkdir -p artifact/lib
+        bash -c 'sh prep.sh; cd Bochs/bochs; sh .conf.cpu-msvc;'
+        cd Bochs/bochs
+        Start-Process nmake -ErrorAction SilentlyContinue -PassThru -Wait
+        cp -Verbose cpu/libcpu.a ../../artifact/lib/cpu.lib
+        cp -Verbose cpu/fpu/libfpu.a ../../artifact/lib/fpu.lib
+        cp -Verbose cpu/avx/libavx.a ../../artifact/lib/avx.lib
+        cp -Verbose cpu/cpudb/libcpudb.a ../../artifact/lib/cpudb.lib
+        Start-Process nmake all-clean -PassThru -Wait
+        cd ..
+        cp -Verbose -r bochs ../artifact/
+
+    - name: Build BochsCPU (Linux & MacOS)
+      if: matrix.variant.os != 'windows-latest'
+      shell: bash
+      run: |
+        mkdir -p artifact/lib
+        sh prep.sh
+        cd Bochs/bochs
+        sh .conf.cpu
+        make -j ${{ env.NB_CPU }} || true
+        cp -v cpu/libcpu.a ../../artifact/lib/
+        cp -v cpu/fpu/libfpu.a ../../artifact/lib/
+        cp -v cpu/avx/libavx.a ../../artifact/lib/
+        cp -v cpu/cpudb/libcpudb.a ../../artifact/lib/
+        make all-clean
+        cd ..
+        mv bochs ../artifact/
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: bochscpu-build-${{ matrix.variant.os }}-${{ matrix.variant.arch }}
+        path: artifact

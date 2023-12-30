@@ -47,34 +47,34 @@ jobs:
       if: matrix.variant.os == 'windows-latest'
       shell: powershell
       run: |
+        mkdir -p artifact/lib
         bash -c 'sh prep.sh; cd Bochs/bochs; sh .conf.cpu-msvc;'
         cd Bochs/bochs
         Start-Process nmake -ErrorAction SilentlyContinue -PassThru -Wait
-        cd ../..
-        mkdir -p artifact/lib
-        cp -Verbose Bochs/bochs/cpu/libcpu.a artifact/lib/cpu.lib
-        cp -Verbose Bochs/bochs/cpu/fpu/libfpu.a artifact/lib/fpu.lib
-        cp -Verbose Bochs/bochs/cpu/avx/libavx.a artifact/lib/avx.lib
-        cp -Verbose Bochs/bochs/cpu/cpudb/libcpudb.a artifact/lib/cpudb.lib
-        Start-Process nmake clean -PassThru -Wait
-        cp -Verbose -r Bochs/bochs artifact/
+        cp -Verbose cpu/libcpu.a ../../artifact/lib/cpu.lib
+        cp -Verbose cpu/fpu/libfpu.a ../../artifact/lib/fpu.lib
+        cp -Verbose cpu/avx/libavx.a ../../artifact/lib/avx.lib
+        cp -Verbose cpu/cpudb/libcpudb.a ../../artifact/lib/cpudb.lib
+        Start-Process nmake all-clean -PassThru -Wait
+        cd ..
+        cp -Verbose -r bochs ../artifact/
 
     - name: Build BochsCPU (Linux & MacOS)
       if: matrix.variant.os != 'windows-latest'
       shell: bash
       run: |
+        mkdir -p artifact/lib
         sh prep.sh
         cd Bochs/bochs
         sh .conf.cpu
         make -j ${{ env.NB_CPU }} || true
-        cd ../..
-        mkdir -p artifact/lib
-        cp -v Bochs/bochs/cpu/libcpu.a artifact/lib/
-        cp -v Bochs/bochs/cpu/fpu/libfpu.a artifact/lib/
-        cp -v Bochs/bochs/cpu/avx/libavx.a artifact/lib/
-        cp -v Bochs/bochs/cpu/cpudb/libcpudb.a artifact/lib/
-        make clean
-        cp -r -v Bochs/bochs artifact/
+        cp -v cpu/libcpu.a ../../artifact/lib/
+        cp -v cpu/fpu/libfpu.a ../../artifact/lib/
+        cp -v cpu/avx/libavx.a ../../artifact/lib/
+        cp -v cpu/cpudb/libcpudb.a ../../artifact/lib/
+        make all-clean
+        cd ..
+        mv bochs ../artifact/
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3

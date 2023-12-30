@@ -51,11 +51,12 @@ jobs:
         cd Bochs/bochs
         Start-Process nmake -ErrorAction SilentlyContinue -PassThru -Wait
         cd ../..
-        mkdir lib
-        cp -Verbose Bochs/bochs/cpu/libcpu.a lib/cpu.a
-        cp -Verbose Bochs/bochs/cpu/fpu/libfpu.a lib/fpu.a
-        cp -Verbose Bochs/bochs/cpu/avx/libavx.a lib/avx.a
-        cp -Verbose Bochs/bochs/cpu/cpudb/libcpudb.a lib/cpudb.a
+        mkdir -p artifact/lib
+        cp -Verbose Bochs/bochs/cpu/libcpu.a artifact/lib/cpu.a
+        cp -Verbose Bochs/bochs/cpu/fpu/libfpu.a artifact/lib/fpu.a
+        cp -Verbose Bochs/bochs/cpu/avx/libavx.a artifact/lib/avx.a
+        cp -Verbose Bochs/bochs/cpu/cpudb/libcpudb.a artifactlib/cpudb.a
+        robocopy Bochs/bochs artifact/ /e
 
     - name: Build BochsCPU (Linux & MacOS)
       if: matrix.variant.os != 'windows-latest'
@@ -66,14 +67,15 @@ jobs:
         sh .conf.cpu
         make -j ${{ env.NB_CPU }} || true
         cd ../..
-        mkdir lib
-        cp -v Bochs/bochs/cpu/libcpu.a lib/
-        cp -v Bochs/bochs/cpu/fpu/libfpu.a lib/
-        cp -v Bochs/bochs/cpu/avx/libavx.a lib/
-        cp -v Bochs/bochs/cpu/cpudb/libcpudb.a lib/
+        mkdir -p artifact/lib
+        cp -v Bochs/bochs/cpu/libcpu.a artifact/lib/
+        cp -v Bochs/bochs/cpu/fpu/libfpu.a artifact/lib/
+        cp -v Bochs/bochs/cpu/avx/libavx.a artifact/lib/
+        cp -v Bochs/bochs/cpu/cpudb/libcpudb.a artifact/lib/
+        cp -v Bochs/bochs artifact/
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
         name: bochscpu-build-${{ matrix.variant.os }}-${{ matrix.variant.arch }}
-        path: lib
+        path: artifact

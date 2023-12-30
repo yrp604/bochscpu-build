@@ -52,11 +52,11 @@ jobs:
         Start-Process nmake -ErrorAction SilentlyContinue -PassThru -Wait
         cd ../..
         mkdir -p artifact/lib
-        cp -Verbose Bochs/bochs/cpu/libcpu.a artifact/lib/cpu.a
-        cp -Verbose Bochs/bochs/cpu/fpu/libfpu.a artifact/lib/fpu.a
-        cp -Verbose Bochs/bochs/cpu/avx/libavx.a artifact/lib/avx.a
-        cp -Verbose Bochs/bochs/cpu/cpudb/libcpudb.a artifact/lib/cpudb.a
-        robocopy Bochs/bochs artifact/ /e
+        cp -Verbose Bochs/bochs/cpu/libcpu.a artifact/lib/cpu.lib
+        cp -Verbose Bochs/bochs/cpu/fpu/libfpu.a artifact/lib/fpu.lib
+        cp -Verbose Bochs/bochs/cpu/avx/libavx.a artifact/lib/avx.lib
+        cp -Verbose Bochs/bochs/cpu/cpudb/libcpudb.a artifact/lib/cpudb.lib
+        cp -Verbose -r Bochs/bochs artifact/
 
     - name: Build BochsCPU (Linux & MacOS)
       if: matrix.variant.os != 'windows-latest'

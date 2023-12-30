@@ -49,7 +49,7 @@ jobs:
       shell: powershell
       run: |
         mkdir -p artifact/lib
-        bash -c 'sh prep.sh; cd Bochs/bochs; sh .conf.cpu-msvc;'
+        bash -c 'BOCHS_REV=$(cat BOCHS_REV) sh prep.sh; cd Bochs/bochs; sh .conf.cpu-msvc;'
         cd Bochs/bochs
         Start-Process nmake -ErrorAction SilentlyContinue -PassThru -Wait
         cp -Verbose cpu/libcpu.a ../../artifact/lib/cpu.lib
@@ -65,7 +65,7 @@ jobs:
       shell: bash
       run: |
         mkdir -p artifact/lib
-        sh prep.sh
+        BOCHS_REV=$(cat BOCHS_REV) sh prep.sh
         cd Bochs/bochs
         sh .conf.cpu
         make -j ${{ env.NB_CPU }} || true

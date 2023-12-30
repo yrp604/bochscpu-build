@@ -55,7 +55,7 @@ jobs:
         cp -Verbose Bochs/bochs/cpu/libcpu.a artifact/lib/cpu.a
         cp -Verbose Bochs/bochs/cpu/fpu/libfpu.a artifact/lib/fpu.a
         cp -Verbose Bochs/bochs/cpu/avx/libavx.a artifact/lib/avx.a
-        cp -Verbose Bochs/bochs/cpu/cpudb/libcpudb.a artifactlib/cpudb.a
+        cp -Verbose Bochs/bochs/cpu/cpudb/libcpudb.a artifact/lib/cpudb.a
         robocopy Bochs/bochs artifact/ /e
 
     - name: Build BochsCPU (Linux & MacOS)

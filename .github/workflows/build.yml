@@ -72,7 +72,7 @@ jobs:
         cp -v Bochs/bochs/cpu/fpu/libfpu.a artifact/lib/
         cp -v Bochs/bochs/cpu/avx/libavx.a artifact/lib/
         cp -v Bochs/bochs/cpu/cpudb/libcpudb.a artifact/lib/
-        cp -v Bochs/bochs artifact/
+        cp -r -v Bochs/bochs artifact/
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v3

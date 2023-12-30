@@ -56,7 +56,7 @@ jobs:
         cp -Verbose Bochs/bochs/cpu/fpu/libfpu.a artifact/lib/fpu.lib
         cp -Verbose Bochs/bochs/cpu/avx/libavx.a artifact/lib/avx.lib
         cp -Verbose Bochs/bochs/cpu/cpudb/libcpudb.a artifact/lib/cpudb.lib
-        Start-Process nmake all-clean -ErrorAction SilentlyContinue -PassThru -Wait
+        Start-Process nmake clean -PassThru -Wait
         cp -Verbose -r Bochs/bochs artifact/
 
     - name: Build BochsCPU (Linux & MacOS)
@@ -73,7 +73,7 @@ jobs:
         cp -v Bochs/bochs/cpu/fpu/libfpu.a artifact/lib/
         cp -v Bochs/bochs/cpu/avx/libavx.a artifact/lib/
         cp -v Bochs/bochs/cpu/cpudb/libcpudb.a artifact/lib/
-        make all-clean
+        make clean
         cp -r -v Bochs/bochs artifact/
 
     - name: Upload artifacts

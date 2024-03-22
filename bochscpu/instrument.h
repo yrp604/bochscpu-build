@@ -27,6 +27,7 @@ class bxInstruction_c;
 extern "C" {
 
 void bx_instr_init_env(void);
+
 void bx_instr_exit_env(void);
 
 // called from the CPU core

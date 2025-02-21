@@ -44,7 +44,7 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@v1
       if: matrix.variant.os == 'windows-latest'
 
-    - name: Build BochsCPU (Windows)
+    - name: Build bochscpu (Windows)
       if: matrix.variant.os == 'windows-latest'
       shell: powershell
       run: |
@@ -60,7 +60,7 @@ jobs:
         cd ..
         cp -Verbose -r bochs ../artifact/
 
-    - name: Build BochsCPU (Linux & MacOS)
+    - name: Build bochscpu (Linux & MacOS)
       if: matrix.variant.os != 'windows-latest'
       shell: bash
       run: |

@@ -56,6 +56,7 @@ jobs:
         cp -Verbose cpu/fpu/libfpu.a ../../artifact/lib/fpu.lib
         cp -Verbose cpu/avx/libavx.a ../../artifact/lib/avx.lib
         cp -Verbose cpu/cpudb/libcpudb.a ../../artifact/lib/cpudb.lib
+        cp -Verbose cpu/softfloat3e/libsoftfloat.a ../../artifact/lib/softfloat.lib
         Start-Process nmake all-clean -PassThru -Wait
         cd ..
         cp -Verbose -r bochs ../artifact/
@@ -73,6 +74,7 @@ jobs:
         cp -v cpu/fpu/libfpu.a ../../artifact/lib/
         cp -v cpu/avx/libavx.a ../../artifact/lib/
         cp -v cpu/cpudb/libcpudb.a ../../artifact/lib/
+        cp -v cpu/softfloat3e/libsoftfloat.a ../../artifact/lib/
         make all-clean
         cd ..
         mv bochs ../artifact/

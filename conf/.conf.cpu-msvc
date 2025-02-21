@@ -20,6 +20,7 @@ set echo
   --enable-instrumentation=instrument/bochscpu \
   --enable-show-ips \
   --disable-smp \
+  --enable-plugins \
   --enable-configurable-msrs \
   --with-win32 --with-nogui \
   ${CONFIGURE_ARGS}

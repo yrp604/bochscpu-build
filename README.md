@@ -12,7 +12,7 @@ should only need to download a recent release, not build from source yourself.
 
 ## Build
 
-Requires subversion, git, and a C compiler
+Requires git and a C compiler
 
 NOTES:
 - by design the build will fail with an error about libinstrument. This is

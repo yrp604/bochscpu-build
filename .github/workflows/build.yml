@@ -78,7 +78,7 @@ jobs:
         mv bochs ../artifact/
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: bochscpu-build-${{ matrix.variant.os }}-${{ matrix.variant.arch }}
         path: artifact

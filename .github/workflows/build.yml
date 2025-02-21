@@ -44,7 +44,7 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@v1
       if: matrix.variant.os == 'windows-latest'
 
-    - name: Build BochsCPU (Windows)
+    - name: Build bochscpu (Windows)
       if: matrix.variant.os == 'windows-latest'
       shell: powershell
       run: |
@@ -57,10 +57,11 @@ jobs:
         cp -Verbose cpu/avx/libavx.a ../../artifact/lib/avx.lib
         cp -Verbose cpu/cpudb/libcpudb.a ../../artifact/lib/cpudb.lib
         cp -Verbose cpu/softfloat3e/libsoftfloat.a ../../artifact/lib/softfloat.lib
+        Start-Process nmake all-clean -PassThru -Wait
         cd ..
         cp -Verbose -r bochs ../artifact/
 
-    - name: Build BochsCPU (Linux & MacOS)
+    - name: Build bochscpu (Linux & MacOS)
       if: matrix.variant.os != 'windows-latest'
       shell: bash
       run: |

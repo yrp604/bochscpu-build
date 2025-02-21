@@ -2,7 +2,10 @@
 
 |Branch|Status|
 |------|------|
-|main|[![Build Status](https://dev.azure.com/yrp604/bochscpu-build/_apis/build/status/yrp604.bochscpu-build?branchName=master)](https://dev.azure.com/yrp604/bochscpu-build/_build/latest?definitionId=2&branchName=master)|
+|main|![Build](https://github.com/yrp604/bochscpu-build/actions/workflows/build.yml/badge.svg)|
+|3.0|![Build](https://github.com/yrp604/bochscpu-build/actions/workflows/build.yml/badge.svg?branch=3.0)|
+|2.8|![Build](https://github.com/yrp604/bochscpu-build/actions/workflows/build.yml/badge.svg?branch=2.8)|
+|2.7|![Build](https://github.com/yrp604/bochscpu-build/actions/workflows/build.yml/badge.svg?branch=2.7)|
 
 This is a build job for the bochs artifacts for bochscpu. For normal usage you
 should only need to download a recent release, not build from source yourself.

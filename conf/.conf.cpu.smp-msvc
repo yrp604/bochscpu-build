@@ -21,7 +21,6 @@ set echo
   --enable-show-ips \
   --enable-smp \
   --enable-configurable-msrs \
-  --disable-disasm \
   --with-win32 --with-nogui \
   ${CONFIGURE_ARGS}
 

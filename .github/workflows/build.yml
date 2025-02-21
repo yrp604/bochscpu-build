@@ -5,6 +5,8 @@ on:
   push:
     branches:
     - main
+    - 3.0
+    - 2.8
     - 2.7
   schedule:
     - cron: 0 0 * * *
@@ -44,7 +46,7 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@v1
       if: matrix.variant.os == 'windows-latest'
 
-    - name: Build BochsCPU (Windows)
+    - name: Build bochscpu (Windows)
       if: matrix.variant.os == 'windows-latest'
       shell: powershell
       run: |
@@ -56,11 +58,12 @@ jobs:
         cp -Verbose cpu/fpu/libfpu.a ../../artifact/lib/fpu.lib
         cp -Verbose cpu/avx/libavx.a ../../artifact/lib/avx.lib
         cp -Verbose cpu/cpudb/libcpudb.a ../../artifact/lib/cpudb.lib
+        cp -Verbose cpu/softfloat3e/libsoftfloat.a ../../artifact/lib/softfloat.lib
         Start-Process nmake all-clean -PassThru -Wait
         cd ..
         cp -Verbose -r bochs ../artifact/
 
-    - name: Build BochsCPU (Linux & MacOS)
+    - name: Build bochscpu (Linux & MacOS)
       if: matrix.variant.os != 'windows-latest'
       shell: bash
       run: |
@@ -73,6 +76,7 @@ jobs:
         cp -v cpu/fpu/libfpu.a ../../artifact/lib/
         cp -v cpu/avx/libavx.a ../../artifact/lib/
         cp -v cpu/cpudb/libcpudb.a ../../artifact/lib/
+        cp -v cpu/softfloat3e/libsoftfloat.a ../../artifact/lib/
         make all-clean
         cd ..
         mv bochs ../artifact/

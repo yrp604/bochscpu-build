@@ -26,7 +26,7 @@ export CXXFLAGS
   --enable-instrumentation=instrument/bochscpu \
   --enable-show-ips \
   --enable-smp \
+  --enable-plugins \
   --enable-configurable-msrs \
-  --disable-disasm \
   --with-nogui \
   ${CONFIGURE_ARGS}

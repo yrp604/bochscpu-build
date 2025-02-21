@@ -27,6 +27,5 @@ export CXXFLAGS
   --enable-show-ips \
   --disable-smp \
   --enable-configurable-msrs \
-  --disable-disasm \
   --with-nogui \
   ${CONFIGURE_ARGS}

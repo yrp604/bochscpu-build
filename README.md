@@ -50,7 +50,7 @@ This will build the following files:
 - `Bochs/bochs/cpu/fpu/libfpu.a`
 - `Bochs/bochs/cpu/avx/libavx.a`
 - `Bochs/bochs/cpu/cpudb/libcpudb.a`
-- `Bochs/bochs/cpusoftfloat3e/libsoftfloat.a`
+- `Bochs/bochs/cpu/softfloat3e/libsoftfloat.a`
 - `Bochs/bochs` source tree
 
 These needs to wind up in a directory tree like this:

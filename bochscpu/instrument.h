@@ -67,6 +67,8 @@ void bx_instr_outp(Bit16u addr, unsigned len, unsigned val);
 void bx_instr_lin_access(unsigned cpu, bx_address lin, bx_address phy, unsigned len, unsigned memtype, unsigned rw);
 void bx_instr_phy_access(unsigned cpu, bx_address phy, unsigned len, unsigned memtype, unsigned rw);
 
+void bx_instr_cpuid(unsigned cpu);
+
 void bx_instr_wrmsr(unsigned cpu, unsigned addr, Bit64u value);
 
 void bx_instr_vmexit(unsigned cpu, Bit32u reason, Bit64u qualification);
@@ -130,6 +132,9 @@ void bx_instr_vmexit(unsigned cpu, Bit32u reason, Bit64u qualification);
 #define BX_INSTR_INP(addr, len)               bx_instr_inp(addr, len)
 #define BX_INSTR_INP2(addr, len, val)         bx_instr_inp2(addr, len, val)
 #define BX_INSTR_OUTP(addr, len, val)         bx_instr_outp(addr, len, val)
+
+/* cpuid callback */
+#define BX_INSTR_CPUID(cpu_id) bx_instr_cpuid(cpu_id)
 
 /* wrmsr callback */
 #define BX_INSTR_WRMSR(cpu_id, addr, value)   bx_instr_wrmsr(cpu_id, addr, value)

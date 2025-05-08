@@ -22,6 +22,7 @@ export CXXFLAGS
   --enable-avx \
   --enable-evex \
   --enable-vmx=2 \
+  --enable-cet \
   --enable-pci \
   --enable-instrumentation=instrument/bochscpu \
   --enable-show-ips \

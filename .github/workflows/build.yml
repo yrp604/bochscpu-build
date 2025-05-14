@@ -19,7 +19,8 @@ jobs:
       fail-fast: false
       matrix:
         variant:
-          - {os: windows-latest, arch: x64}
+          - {os: windows-latest, arch: x64, crt: MT}
+          - {os: windows-latest, arch: x64, crt: MD}
           - {os: ubuntu-latest, arch: x64}
           - {os: macos-latest, arch: x64}
     runs-on: ${{ matrix.variant.os }}
@@ -46,12 +47,24 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@v1
       if: matrix.variant.os == 'windows-latest'
 
-    - name: Build bochscpu (Windows)
-      if: matrix.variant.os == 'windows-latest'
+    - name: Configure bochscpu (Windows)
+      if: matrix.variant.os == 'windows-latest' && matrix.variant.crt == 'MT'
       shell: powershell
       run: |
         mkdir -p artifact/lib
         bash -c 'BOCHS_REV=$(cat BOCHS_REV) sh prep.sh; cd Bochs/bochs; sh .conf.cpu-msvc;'
+
+    - name: Configure bochscpu (Windows)
+      if: matrix.variant.os == 'windows-latest' && matrix.variant.crt == 'MD'
+      shell: powershell
+      run: |
+        mkdir -p artifact/lib
+        bash -c 'BOCHS_REV=$(cat BOCHS_REV) sh prep.sh; cd Bochs/bochs; sh .conf.cpu-msvc --enable-plugins;'
+
+    - name: Build bochscpu (Windows)
+      if: matrix.variant.os == 'windows-latest'
+      shell: powershell
+      run: |
         cd Bochs/bochs
         Start-Process nmake -ErrorAction SilentlyContinue -PassThru -Wait
         cp -Verbose cpu/libcpu.a ../../artifact/lib/cpu.lib
@@ -63,7 +76,7 @@ jobs:
         cd ..
         cp -Verbose -r bochs ../artifact/
 
-    - name: Build bochscpu (Linux & MacOS)
+    - name: Configure & Build bochscpu (Linux & MacOS)
       if: matrix.variant.os != 'windows-latest'
       shell: bash
       run: |
@@ -81,8 +94,16 @@ jobs:
         cd ..
         mv bochs ../artifact/
 
-    - name: Upload artifacts
+    - name: Upload artifacts (Linux & MacOS)
+      if: matrix.variant.os != 'windows-latest'
       uses: actions/upload-artifact@v4
       with:
         name: bochscpu-build-${{ matrix.variant.os }}-${{ matrix.variant.arch }}
+        path: artifact
+
+    - name: Upload artifacts (Windows)
+      if: matrix.variant.os == 'windows-latest'
+      uses: actions/upload-artifact@v4
+      with:
+        name: bochscpu-build-${{ matrix.variant.os }}-${{ matrix.variant.arch }}-${{matrix.variant.crt}}
         path: artifact

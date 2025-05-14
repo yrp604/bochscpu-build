@@ -29,4 +29,5 @@ export CXXFLAGS
   --disable-smp \
   --enable-configurable-msrs \
   --with-nogui \
+  $@ \
   ${CONFIGURE_ARGS}

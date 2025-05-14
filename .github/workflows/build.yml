@@ -24,8 +24,8 @@ jobs:
           - {os: windows-11-arm, arch: arm64, crt: MT}
           - {os: windows-11-arm, arch: arm64, crt: MD}
           - {os: ubuntu-latest, arch: x64}
-          - {os: ubuntu-24.04-arm, arch: arm64 }
-          - {os: macos-latest, arch: arm64 }
+          - {os: ubuntu-24.04-arm, arch: arm64}
+          - {os: macos-latest, arch: arm64}
     runs-on: ${{ matrix.variant.os }}
     name: ${{ matrix.variant.os }} / ${{ matrix.variant.arch }}
     steps:
@@ -33,7 +33,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Initialization (Windows)
-      if: matrix.variant.os == 'windows-latest'
+      if: matrix.variant.os == 'windows-latest' || matrix.variant.os == 'windows-11-arm'
       run: echo "NB_CPU=$env:NUMBER_OF_PROCESSORS" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
     - name: Initialization (Linux)
@@ -45,27 +45,27 @@ jobs:
       run: echo "NB_CPU=$(sysctl -n hw.ncpu)" >> $GITHUB_ENV
 
     - uses: microsoft/setup-msbuild@v1
-      if: matrix.variant.os == 'windows-latest'
+      if: matrix.variant.os == 'windows-latest' || matrix.variant.os == 'windows-11-arm'
 
     - uses: ilammy/msvc-dev-cmd@v1
-      if: matrix.variant.os == 'windows-latest'
+      if: matrix.variant.os == 'windows-latest' || matrix.variant.os == 'windows-11-arm'
 
     - name: Configure bochscpu (Windows)
-      if: matrix.variant.os == 'windows-latest' && matrix.variant.crt == 'MT'
+      if: (matrix.variant.os == 'windows-latest' || matrix.variant.os == 'windows-11-arm') && matrix.variant.crt == 'MT'
       shell: powershell
       run: |
         mkdir -p artifact/lib
         bash -c 'BOCHS_REV=$(cat BOCHS_REV) sh prep.sh; cd Bochs/bochs; sh .conf.cpu-msvc;'
 
     - name: Configure bochscpu (Windows)
-      if: matrix.variant.os == 'windows-latest' && matrix.variant.crt == 'MD'
+      if: (matrix.variant.os == 'windows-latest' || matrix.variant.os == 'windows-11-arm') && matrix.variant.crt == 'MD'
       shell: powershell
       run: |
         mkdir -p artifact/lib
         bash -c 'BOCHS_REV=$(cat BOCHS_REV) sh prep.sh; cd Bochs/bochs; sh .conf.cpu-msvc --enable-plugins;'
 
     - name: Build bochscpu (Windows)
-      if: matrix.variant.os == 'windows-latest'
+      if: matrix.variant.os == 'windows-latest' || matrix.variant.os == 'windows-11-arm'
       shell: powershell
       run: |
         cd Bochs/bochs
@@ -80,7 +80,7 @@ jobs:
         cp -Verbose -r bochs ../artifact/
 
     - name: Configure & Build bochscpu (Linux & MacOS)
-      if: matrix.variant.os != 'windows-latest'
+      if: matrix.variant.os != 'windows-latest' && matrix.variant.os != 'windows-11-arm'
       shell: bash
       run: |
         mkdir -p artifact/lib
@@ -98,14 +98,14 @@ jobs:
         mv bochs ../artifact/
 
     - name: Upload artifacts (Linux & MacOS)
-      if: matrix.variant.os != 'windows-latest'
+      if: matrix.variant.os != 'windows-latest' && matrix.variant.os != 'windows-11-arm'
       uses: actions/upload-artifact@v4
       with:
         name: bochscpu-build-${{ matrix.variant.os }}-${{ matrix.variant.arch }}
         path: artifact
 
     - name: Upload artifacts (Windows)
-      if: matrix.variant.os == 'windows-latest'
+      if: matrix.variant.os == 'windows-latest' || matrix.variant.os == 'windows-11-arm'
       uses: actions/upload-artifact@v4
       with:
         name: bochscpu-build-${{ matrix.variant.os }}-${{ matrix.variant.arch }}-${{matrix.variant.crt}}

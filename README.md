@@ -3,6 +3,7 @@
 |Branch|Status|
 |------|------|
 |main|[![Build](https://github.com/yrp604/bochscpu-build/actions/workflows/build.yml/badge.svg)](https://github.com/yrp604/bochscpu-build/actions?query=branch%3Amain)|
+|3.0.x|[![Build](https://github.com/yrp604/bochscpu-build/actions/workflows/build.yml/badge.svg?branch=3.0.x)](https://github.com/yrp604/bochscpu-build/actions?query=branch%3A3.0.x)|
 |3.0|[![Build](https://github.com/yrp604/bochscpu-build/actions/workflows/build.yml/badge.svg?branch=3.0)](https://github.com/yrp604/bochscpu-build/actions?query=branch%3A3.0)|
 |2.8|[![Build](https://github.com/yrp604/bochscpu-build/actions/workflows/build.yml/badge.svg?branch=2.8)](https://github.com/yrp604/bochscpu-build/actions?query=branch%3A2.8)|
 |2.7|[![Build](https://github.com/yrp604/bochscpu-build/actions/workflows/build.yml/badge.svg?branch=2.7)](https://github.com/yrp604/bochscpu-build/actions?query=branch%3A2.7)|

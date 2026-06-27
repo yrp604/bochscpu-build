@@ -93,7 +93,7 @@ void bx_instr_vmexit(unsigned cpu, Bit32u reason, Bit64u qualification);
 
 /* branch resolution */
 #define BX_INSTR_NEAR_BRANCH_TAKEN(cpu_id, what, branch_eip, new_eip) bx_instr_branch_taken(cpu_id, what, branch_eip, new_eip)
-#define BX_INSTR_NEAR_BRANCH_NOT_TAKEN(cpu_id, what, branch_eip, new_eip) bx_instr_branch_not_taken(cpu_id, BX_INSTR_IS_JMP_CONDITIONAL_NOT_TAKEN, branch_eip, new_eip)
+#define BX_INSTR_NEAR_BRANCH_NOT_TAKEN(cpu_id, branch_eip, new_eip) bx_instr_branch_not_taken(cpu_id, BX_INSTR_IS_JMP_CONDITIONAL_NOT_TAKEN, branch_eip, new_eip)
 #define BX_INSTR_FAR_BRANCH(cpu_id, what, prev_cs, prev_eip, new_cs, new_eip) \
                        bx_instr_far_branch(cpu_id, what, prev_cs, prev_eip, new_cs, new_eip)
 

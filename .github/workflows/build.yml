@@ -70,7 +70,7 @@ jobs:
       shell: powershell
       run: |
         cd Bochs/bochs
-        Start-Process nmake -ErrorAction SilentlyContinue -PassThru -Wait
+        Start-Process nmake -ArgumentList "cpu\libcpu.a", "cpu\fpu\libfpu.a", "cpu\avx\libavx.a", "cpu\cpudb\libcpudb.a", "cpu\softfloat3e\libsoftfloat.a" -PassThru -Wait
         cp -Verbose cpu/libcpu.a ../../artifact/lib/cpu.lib
         cp -Verbose cpu/fpu/libfpu.a ../../artifact/lib/fpu.lib
         cp -Verbose cpu/avx/libavx.a ../../artifact/lib/avx.lib

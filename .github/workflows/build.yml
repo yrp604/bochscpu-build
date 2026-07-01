@@ -31,7 +31,7 @@ jobs:
     name: ${{ matrix.variant.os }} / ${{ matrix.variant.arch }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7
 
     - name: Initialization (Windows)
       if: matrix.variant.os == 'windows-latest' || matrix.variant.os == 'windows-11-arm'
@@ -100,14 +100,14 @@ jobs:
 
     - name: Upload artifacts (Linux & MacOS)
       if: matrix.variant.os != 'windows-latest' && matrix.variant.os != 'windows-11-arm'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: bochscpu-build-${{ matrix.variant.os }}-${{ matrix.variant.arch }}
         path: artifact
 
     - name: Upload artifacts (Windows)
       if: matrix.variant.os == 'windows-latest' || matrix.variant.os == 'windows-11-arm'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: bochscpu-build-${{ matrix.variant.os }}-${{ matrix.variant.arch }}-${{matrix.variant.crt}}
         path: artifact

@@ -3,6 +3,7 @@ name: Build
 on:
   pull_request:
   push:
+    tags: v*
     branches:
     - main
     - 3.1

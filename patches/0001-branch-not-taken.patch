@@ -1,163 +1,17 @@
-From 844f7014c241ac68bf4bace17a8659c3566ab4ae Mon Sep 17 00:00:00 2001
-From: yrp <yrp604@protonmail.com>
-Date: Sat, 27 Jun 2026 16:17:39 -0700
-Subject: [PATCH] add new pc to branch not taken callback
-
----
- bochs/cpu/ctrl_xfer16.cc | 46 ++++++++++++++++++++--------------------
- bochs/cpu/ctrl_xfer32.cc | 46 ++++++++++++++++++++--------------------
- bochs/cpu/ctrl_xfer64.cc | 46 ++++++++++++++++++++--------------------
- 3 files changed, 69 insertions(+), 69 deletions(-)
-
 diff --git a/bochs/cpu/ctrl_xfer16.cc b/bochs/cpu/ctrl_xfer16.cc
-index 667b4fbed..848fa5581 100644
+index 823813aa9..1ac9e806c 100644
 --- a/bochs/cpu/ctrl_xfer16.cc
 +++ b/bochs/cpu/ctrl_xfer16.cc
-@@ -305,7 +305,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JO_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
+@@ -310,7 +310,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JMP_Jw(bxInstruction_c *i)
+       BX_LINK_TRACE(i);                                                                   \
+     }                                                                                     \
+                                                                                           \
+-    BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);                                  \
++    BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);                             \
+     BX_NEXT_INSTR(i); /* trace can continue over non-taken branch */                      \
    }
  
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -316,7 +316,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNO_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -327,7 +327,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JB_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -338,7 +338,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNB_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -349,7 +349,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JZ_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -360,7 +360,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNZ_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -371,7 +371,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JBE_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -382,7 +382,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNBE_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -393,7 +393,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JS_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -404,7 +404,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNS_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -415,7 +415,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JP_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -426,7 +426,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNP_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -437,7 +437,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JL_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -448,7 +448,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNL_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -459,7 +459,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JLE_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -470,7 +470,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNLE_Jw(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -600,7 +600,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JCXZ_Jb(bxInstruction_c *i)
+@@ -476,7 +476,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JCXZ_Jb(bxInstruction_c *i)
      BX_LINK_TRACE(i);
    }
  
@@ -166,7 +20,7 @@ index 667b4fbed..848fa5581 100644
    BX_NEXT_TRACE(i);
  }
  
-@@ -628,7 +628,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPNE16_Jb(bxInstruction_c *i)
+@@ -504,7 +504,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPNE16_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -175,7 +29,7 @@ index 667b4fbed..848fa5581 100644
      }
  #endif
  
-@@ -643,7 +643,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPNE16_Jb(bxInstruction_c *i)
+@@ -519,7 +519,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPNE16_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -184,7 +38,7 @@ index 667b4fbed..848fa5581 100644
      }
  #endif
  
-@@ -667,7 +667,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPE16_Jb(bxInstruction_c *i)
+@@ -543,7 +543,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPE16_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -193,7 +47,7 @@ index 667b4fbed..848fa5581 100644
      }
  #endif
  
-@@ -682,7 +682,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPE16_Jb(bxInstruction_c *i)
+@@ -558,7 +558,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPE16_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -202,7 +56,7 @@ index 667b4fbed..848fa5581 100644
      }
  #endif
  
-@@ -706,7 +706,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOP16_Jb(bxInstruction_c *i)
+@@ -582,7 +582,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOP16_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -211,7 +65,7 @@ index 667b4fbed..848fa5581 100644
      }
  #endif
  
-@@ -721,7 +721,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOP16_Jb(bxInstruction_c *i)
+@@ -597,7 +597,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOP16_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -221,154 +75,19 @@ index 667b4fbed..848fa5581 100644
  #endif
  
 diff --git a/bochs/cpu/ctrl_xfer32.cc b/bochs/cpu/ctrl_xfer32.cc
-index 854b3c7bd..5fdcd2af4 100644
+index b0a2db9e0..078bc6714 100644
 --- a/bochs/cpu/ctrl_xfer32.cc
 +++ b/bochs/cpu/ctrl_xfer32.cc
-@@ -307,7 +307,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JO_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
+@@ -310,7 +310,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JMP_Jd(bxInstruction_c *i)
+       BX_LINK_TRACE(i);                                                                   \
+     }                                                                                     \
+                                                                                           \
+-    BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);                                  \
++    BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);                             \
+     BX_NEXT_INSTR(i); /* trace can continue over non-taken branch */                      \
    }
  
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -318,7 +318,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNO_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -329,7 +329,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JB_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -340,7 +340,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNB_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -351,7 +351,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JZ_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -362,7 +362,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNZ_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -373,7 +373,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JBE_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -384,7 +384,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNBE_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -395,7 +395,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JS_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -406,7 +406,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNS_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -417,7 +417,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JP_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -428,7 +428,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNP_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -439,7 +439,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JL_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -450,7 +450,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNL_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -461,7 +461,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JLE_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -472,7 +472,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNLE_Jd(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -624,7 +624,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JECXZ_Jb(bxInstruction_c *i)
+@@ -498,7 +498,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JECXZ_Jb(bxInstruction_c *i)
      BX_LINK_TRACE(i);
    }
  
@@ -377,7 +96,7 @@ index 854b3c7bd..5fdcd2af4 100644
    BX_NEXT_TRACE(i);
  }
  
-@@ -652,7 +652,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPNE32_Jb(bxInstruction_c *i)
+@@ -526,7 +526,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPNE32_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -386,7 +105,7 @@ index 854b3c7bd..5fdcd2af4 100644
      }
  #endif
  
-@@ -667,7 +667,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPNE32_Jb(bxInstruction_c *i)
+@@ -541,7 +541,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPNE32_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -395,7 +114,7 @@ index 854b3c7bd..5fdcd2af4 100644
      }
  #endif
  
-@@ -691,7 +691,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPE32_Jb(bxInstruction_c *i)
+@@ -565,7 +565,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPE32_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -404,7 +123,7 @@ index 854b3c7bd..5fdcd2af4 100644
      }
  #endif
  
-@@ -706,7 +706,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPE32_Jb(bxInstruction_c *i)
+@@ -580,7 +580,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPE32_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -413,7 +132,7 @@ index 854b3c7bd..5fdcd2af4 100644
      }
  #endif
  
-@@ -730,7 +730,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOP32_Jb(bxInstruction_c *i)
+@@ -604,7 +604,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOP32_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -422,7 +141,7 @@ index 854b3c7bd..5fdcd2af4 100644
      }
  #endif
  
-@@ -745,7 +745,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOP32_Jb(bxInstruction_c *i)
+@@ -619,7 +619,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOP32_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -432,154 +151,19 @@ index 854b3c7bd..5fdcd2af4 100644
  #endif
  
 diff --git a/bochs/cpu/ctrl_xfer64.cc b/bochs/cpu/ctrl_xfer64.cc
-index 8e40480cc..56512a242 100644
+index cbf0d7227..464cb0220 100644
 --- a/bochs/cpu/ctrl_xfer64.cc
 +++ b/bochs/cpu/ctrl_xfer64.cc
-@@ -223,7 +223,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JO_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
+@@ -228,7 +228,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JMP_Jq(bxInstruction_c *i)
+       BX_LINK_TRACE(i);                                                                   \
+     }                                                                                     \
+                                                                                           \
+-    BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);                                  \
++    BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);                             \
+     BX_NEXT_INSTR(i); /* trace can continue over non-taken branch */                      \
    }
  
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -234,7 +234,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNO_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -245,7 +245,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JB_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -256,7 +256,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNB_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -267,7 +267,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JZ_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -278,7 +278,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNZ_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -289,7 +289,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JBE_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -300,7 +300,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNBE_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -311,7 +311,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JS_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -322,7 +322,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNS_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -333,7 +333,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JP_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -344,7 +344,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNP_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -355,7 +355,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JL_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -366,7 +366,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNL_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -377,7 +377,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JLE_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -388,7 +388,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JNLE_Jq(bxInstruction_c *i)
-     BX_LINK_TRACE(i);
-   }
- 
--  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP);
-+  BX_INSTR_NEAR_BRANCH_NOT_TAKEN(BX_CPU_ID, PREV_RIP, RIP);
-   BX_NEXT_INSTR(i); // trace can continue over non-taken branch
- }
- 
-@@ -503,7 +503,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JRCXZ_Jb(bxInstruction_c *i)
+@@ -376,7 +376,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::JRCXZ_Jb(bxInstruction_c *i)
      BX_LINK_TRACE(i);
    }
  
@@ -588,7 +172,7 @@ index 8e40480cc..56512a242 100644
    BX_NEXT_TRACE(i);
  }
  
-@@ -527,7 +527,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPNE64_Jb(bxInstruction_c *i)
+@@ -400,7 +400,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPNE64_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -597,7 +181,7 @@ index 8e40480cc..56512a242 100644
      }
  #endif
  
-@@ -541,7 +541,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPNE64_Jb(bxInstruction_c *i)
+@@ -414,7 +414,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPNE64_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -606,7 +190,7 @@ index 8e40480cc..56512a242 100644
      }
  #endif
  
-@@ -561,7 +561,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPE64_Jb(bxInstruction_c *i)
+@@ -434,7 +434,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPE64_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -615,7 +199,7 @@ index 8e40480cc..56512a242 100644
      }
  #endif
  
-@@ -575,7 +575,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPE64_Jb(bxInstruction_c *i)
+@@ -448,7 +448,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOPE64_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -624,7 +208,7 @@ index 8e40480cc..56512a242 100644
      }
  #endif
  
-@@ -595,7 +595,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOP64_Jb(bxInstruction_c *i)
+@@ -468,7 +468,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOP64_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -633,7 +217,7 @@ index 8e40480cc..56512a242 100644
      }
  #endif
  
-@@ -609,7 +609,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOP64_Jb(bxInstruction_c *i)
+@@ -482,7 +482,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::LOOP64_Jb(bxInstruction_c *i)
      }
  #if BX_INSTRUMENTATION
      else {
@@ -642,6 +226,3 @@ index 8e40480cc..56512a242 100644
      }
  #endif
  
--- 
-2.52.0.windows.1
-

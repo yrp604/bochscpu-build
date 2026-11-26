@@ -23,10 +23,10 @@ jobs:
       fail-fast: false
       matrix:
         variant:
-          - {os: windows-latest, arch: x64, crt: MT, msvc_arch: x64}
-          - {os: windows-latest, arch: x64, crt: MD, msvc_arch: x64}
-          - {os: windows-11-arm, arch: arm64, crt: MT, msvc_arch: arm64}
-          - {os: windows-11-arm, arch: arm64, crt: MD, msvc_arch: arm64}
+          - {os: windows-latest, arch: x64, crt: MT}
+          - {os: windows-latest, arch: x64, crt: MD}
+          - {os: windows-11-arm, arch: arm64, crt: MT}
+          - {os: windows-11-arm, arch: arm64, crt: MD}
           - {os: ubuntu-latest, arch: x64}
           - {os: ubuntu-24.04-arm, arch: arm64}
           - {os: macos-latest, arch: arm64}
@@ -54,7 +54,7 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@v1
       if: matrix.variant.os == 'windows-latest' || matrix.variant.os == 'windows-11-arm'
       with:
-        arch: ${{ matrix.variant.msvc_arch }}
+        arch: ${{ matrix.variant.arch }}
 
     - name: Configure bochscpu (Windows)
       if: (matrix.variant.os == 'windows-latest' || matrix.variant.os == 'windows-11-arm') && matrix.variant.crt == 'MT'
